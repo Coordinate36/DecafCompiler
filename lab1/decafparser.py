@@ -1,5 +1,3 @@
-from itertools import islice
-
 from decaflexer import tokens
 from decaflexer import precedence
 from GrammarTree import GrammarTree
@@ -7,7 +5,7 @@ from GrammarTree import GrammarTree
 def p_program(p):
     '''Program : ClassDef
                | Program ClassDef'''
-    p[0] = GrammarTree(p.slice[0], p.lineno(0), p[1:])
+    p[0] = GrammarTree(p.slice[0], p.lineno(0), p[1].childs + p[2:] if len(p) >= 3 else p[1:])
 
 def p_variable_def(p):
     '''VariableDef : Variable CommaID SEMICOLON
@@ -22,7 +20,7 @@ def p_comma_id(p):
     '''CommaID : CommaID COMMA ID
                |
     '''
-    p[0] = GrammarTree(p.slice[0], p.lineno(0), p[1:])
+    p[0] = GrammarTree(p.slice[0], p.lineno(0), p[1].childs + p[2:] if len(p) >= 3 else p[1:])
 
 def p_type(p):
     '''Type : INT
@@ -39,7 +37,7 @@ def p_variables(p):
     '''Variables : Variable
                  | Variables COMMA Variable
     '''
-    p[0] = GrammarTree(p.slice[0], p.lineno(0), p[1:])
+    p[0] = GrammarTree(p.slice[0], p.lineno(0), p[1].childs + p[2:] if len(p) >= 3 else p[1:])
 
 def p_formals(p):
     '''Formals : Variables
@@ -63,7 +61,7 @@ def p_fields(p):
     '''Fields : Fields Field
               |
     '''
-    p[0] = GrammarTree(p.slice[0], p.lineno(0), p[1:])
+    p[0] = GrammarTree(p.slice[0], p.lineno(0), p[1].childs + p[2:] if len(p) >= 3 else p[1:])
 
 def p_field(p):
     '''Field : VariableDef
@@ -79,7 +77,7 @@ def p_stmts(p):
     '''Stmts : Stmts Stmt
              |
     '''
-    p[0] = GrammarTree(p.slice[0], p.lineno(0), p[1:])
+    p[0] = GrammarTree(p.slice[0], p.lineno(0), p[1].childs + p[2:] if len(p) >= 3 else p[1:])
 
 def p_stmt(p):
     '''Stmt : VariableDef
@@ -152,7 +150,7 @@ def p_exprs(p):
     '''Exprs : Expr
              | Exprs COMMA Expr
     '''
-    p[0] = GrammarTree(p.slice[0], p.lineno(0), p[1:])
+    p[0] = GrammarTree(p.slice[0], p.lineno(0), p[1].childs + p[2:] if len(p) >= 3 else p[1:])
 
 def p_bool_expr(p):
     'BoolExpr : Expr'

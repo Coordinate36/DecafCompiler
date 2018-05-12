@@ -19,6 +19,7 @@ class test
         s = null;
         x = a + b;
         */
+        int t, r;
         if (a == b)
         {
             if (c == d) {
