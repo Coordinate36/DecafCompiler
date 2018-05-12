@@ -6,7 +6,7 @@ class test
     {
         int[] t;
         /*
-        int x; //test
+        int x; 
         float f;
         bool b, d, e;
         string s;
@@ -30,7 +30,7 @@ class test
         }
         else
         {
-            if (c == d) {
+            if (c != d) {
                 Print("elseif");
             }
             else {

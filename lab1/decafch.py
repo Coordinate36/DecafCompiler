@@ -13,7 +13,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger()
 
-filename = 'test1.decaf'
+filename = 'test.decaf'
 
 with open(filename) as f:
     code = f.read()
@@ -22,3 +22,4 @@ lexer = lex.lex(module=decaflexer)
 lexer.input(code)
 parser = yacc.yacc(module=decafparser, debug=True, debuglog=logger)
 result = parser.parse(lexer=lexer, tracking=True, debug=logger)
+result.traverse()
