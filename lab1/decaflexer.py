@@ -215,3 +215,15 @@ def t_newline(t):
 def t_error(t):
     print('Illegal character {0}'.format(t.value[0]))
     t.lexer.skip(1)
+
+def printTokens(filename='test.decaf'):
+    with open(filename) as f:
+        code = f.read()
+
+    lexer = lex.lex()
+    lexer.input(code)
+    for token in lexer:
+        print(token.type, ':', token.value.value)
+
+if __name__ == '__main__':
+    printTokens()
